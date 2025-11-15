@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note-Taking Application Using JavaScript Classes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .note-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-btn, .edit-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            padding: 0;
+        }
+        .edit-btn {
+            background-color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Note-Taking App</h1>
+        <input type="text" id="noteInput" placeholder="Enter a new note" />
+        <button id="addNoteBtn">Add Note</button>
+
+        <ul id="noteList"></ul>
+    </div>
+
+    <script>
+        // Note class to represent each individual note
+        class Note {
+            constructor(content) {
+                this.content = content;
+            }
+
+            // Method to edit the content of the note
+            edit(newContent) {
+                this.content = newContent;
+            }
+        }
+
+        // NoteManager class to manage the collection of notes
+        class NoteManager {
+            constructor() {
+                this.notes = [];
+            }
+
+            // Method to add a new note
+            addNote(content) {
+                const note = new Note(content);
+                this.notes.push(note);
+            }
+
+            // Method to remove a note by index
+            removeNote(index) {
+                this.notes.splice(index, 1);
+            }
+
+            // Method to edit a note by index
+            editNote(index, newContent) {
+                this.notes[index].edit(newContent);
+            }
+
+            // Method to get all notes
+            getNotes() {
+                return this.notes;
+            }
+        }
+
+        // Initialize NoteManager instance
+        const noteManager = new NoteManager();
+
+        // Add note button event listener
+        document.getElementById('addNoteBtn').addEventListener('click', function() {
+            const noteInput = document.getElementById('noteInput');
+            const noteContent = noteInput.value.trim();
+
+            if (noteContent) {
+                noteManager.addNote(noteContent);
+                noteInput.value = ''; // Clear input field
+                renderNotes();
+            }
+        });
+
+        // Function to render notes on the page
+        function renderNotes() {
+            const noteList = document.getElementById('noteList');
+            noteList.innerHTML = ''; // Clear current list
+
+            const notes = noteManager.getNotes();
+            notes.forEach((note, index) => {
+                const noteItem = document.createElement('li');
+                noteItem.classList.add('note-item');
+                noteItem.innerHTML = `
+                    <span>${note.content}</span>
+                    <div>
+                        <button class="edit-btn" onclick="editNote(${index})">E</button>
+                        <button class="remove-btn" onclick="removeNote(${index})">X</button>
+                    </div>
+                `;
+                noteList.appendChild(noteItem);
+            });
+        }
+
+        // Remove note function
+        function removeNote(index) {
+            noteManager.removeNote(index);
+            renderNotes();
+        }
+
+        // Edit note function
+        function editNote(index) {
+            const newContent = prompt('Edit your note:', noteManager.getNotes()[index].content);
+            if (newContent !== null) {
+                noteManager.editNote(index, newContent);
+                renderNotes();
+            }
+        }
+    </script>
+</body>
+</html>

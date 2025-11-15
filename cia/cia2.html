@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Tasks</title>
+</head>
+<body>
+    <label for="password">Enter Password:</label>
+    <input type="password" id="password">
+    <button onclick="validatePassword()">Validate Password</button>
+   
+
+    <script>
+        function validatePassword() {
+            let password = document.getElementById("password").value;
+            
+            if (password.trim() === "") {
+                alert("Password cannot be empty!");
+            } else if (password.length < 8) {
+                alert("Password must be at least 8 characters long!");
+            } else {
+                alert("Password is valid!");
+            }
+        }
+
+    </script>
+</body>
+</html>

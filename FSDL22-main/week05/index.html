@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoTrack - Sustainability Tracker</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <header>
+    <h1>EcoTrack</h1>
+    <p>Track Your Carbon Footprint and Sustainability Goals</p>
+  </header>
+
+  <main>
+    <!-- Weather & News Section -->
+<section id="weather-news">
+    <h2>Weather & News</h2>
+    <div id="weather">
+      <h3>Weather</h3>
+      <p id="weather-info">Loading weather...</p>
+      <p id="aqi">AQI: Loading...</p>
+    </div>
+    <div id="news">
+      <h3>Latest News</h3>
+      <ul id="news-list"></ul>
+    </div>
+  </section>
+  
+    <!-- Carbon Footprint Calculator -->
+    <section id="calculator">
+      <h2>Carbon Footprint Calculator</h2>
+      <form id="carbonForm">
+        <label for="miles">Miles Driven (per week):</label>
+        <input type="number" id="miles" name="miles" required>
+        
+        <label for="electricity">Electricity Usage (kWh per month):</label>
+        <input type="number" id="electricity" name="electricity" required>
+        
+        <label for="plastic">Plastic Waste (kg per month):</label>
+        <input type="number" id="plastic" name="plastic" required>
+        
+        <button type="submit">Calculate</button>
+      </form>
+      <p id="result"></p>
+    </section>
+
+    <!-- Sustainability Tips -->
+    <section id="tips">
+      <h2>Sustainability Tips</h2>
+      <ul id="tipList"></ul>
+    </section>
+
+    <!-- Goal Tracker -->
+    <section id="goals">
+      <h2>Set Your Sustainability Goals</h2>
+      <form id="goalForm">
+        <label for="goal">Goal:</label>
+        <input type="text" id="goal" name="goal" required>
+        
+        <label for="targetDate">Target Date:</label>
+        <input type="date" id="targetDate" name="targetDate" required>
+        
+        <button type="submit">Add Goal</button>
+      </form>
+      <ul id="goalList"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 EcoTrack. Save the Planet!</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

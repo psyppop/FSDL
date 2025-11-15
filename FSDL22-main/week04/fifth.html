@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling in JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        button, input {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript Event Handling</h1>
+        
+        <!-- Button to change background color -->
+        <button id="colorButton">Change Background Color</button>
+
+        <!-- Form to submit data -->
+        <form id="userForm">
+            <input type="text" id="nameInput" placeholder="Enter your name" required />
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display typed key message -->
+        <div class="message" id="keyPressMessage">Press any key...</div>
+    </div>
+
+    <script>
+        // Event Listener for the "Change Background Color" button
+        document.getElementById('colorButton').addEventListener('click', function() {
+            // Change the background color of the body to a random color
+            document.body.style.backgroundColor = getRandomColor();
+        });
+
+        // Event Listener for form submission
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting and reloading the page
+            const name = document.getElementById('nameInput').value;
+            alert(`Form Submitted! Hello, ${name}!`);
+        });
+
+        // Event Listener for keypress event
+        document.addEventListener('keypress', function(event) {
+            const key = event.key;
+            document.getElementById('keyPressMessage').innerText = `You pressed: ${key}`;
+        });
+
+        // Function to generate a random hex color code
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>

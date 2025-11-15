@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager with JavaScript Classes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #ccc;
+        }
+        .remove-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <input type="text" id="taskInput" placeholder="Enter a task" />
+        <button id="addTaskBtn">Add Task</button>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Task class to represent each individual task
+        class Task {
+            constructor(description) {
+                this.description = description;
+                this.completed = false;
+            }
+
+            toggleComplete() {
+                this.completed = !this.completed;
+            }
+        }
+
+        // TaskManager class to manage the collection of tasks
+        class TaskManager {
+            constructor() {
+                this.tasks = [];
+            }
+
+            addTask(description) {
+                const task = new Task(description);
+                this.tasks.push(task);
+            }
+
+            removeTask(index) {
+                this.tasks.splice(index, 1);
+            }
+
+            toggleTaskCompletion(index) {
+                this.tasks[index].toggleComplete();
+            }
+
+            getTasks() {
+                return this.tasks;
+            }
+        }
+
+        // Initialize TaskManager instance
+        const taskManager = new TaskManager();
+
+        // Add task button event listener
+        document.getElementById('addTaskBtn').addEventListener('click', function() {
+            const taskInput = document.getElementById('taskInput');
+            const taskDescription = taskInput.value.trim();
+
+            if (taskDescription) {
+                taskManager.addTask(taskDescription);
+                taskInput.value = ''; // Clear input field
+                renderTasks();
+            }
+        });
+
+        // Function to render tasks on the page
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = ''; // Clear current list
+
+            const tasks = taskManager.getTasks();
+            tasks.forEach((task, index) => {
+                const taskItem = document.createElement('li');
+                taskItem.classList.add('task-item');
+                if (task.completed) {
+                    taskItem.classList.add('completed');
+                }
+
+                taskItem.innerHTML = `
+                    <span>${task.description}</span>
+                    <div>
+                        <button class="remove-btn" onclick="removeTask(${index})">X</button>
+                        <button onclick="toggleTaskCompletion(${index})">Toggle</button>
+                    </div>
+                `;
+
+                taskList.appendChild(taskItem);
+            });
+        }
+
+        // Remove task function
+        function removeTask(index) {
+            taskManager.removeTask(index);
+            renderTasks();
+        }
+
+        // Toggle task completion function
+        function toggleTaskCompletion(index) {
+            taskManager.toggleTaskCompletion(index);
+            renderTasks();
+        }
+    </script>
+</body>
+</html>
